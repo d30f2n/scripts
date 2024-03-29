@@ -18,6 +18,7 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
 6. Close and reopen PowerShell.
 
 ## Editing the script
+- This script will work as is. If you want to use my settings, you do not have to change anything.
 - Change the function name to whatever you want. This is what you will type in to run yt-dlp. I have mine as `yt-dl`.
 - Change maxThreads to the amount of concurrent downloads you want. Some sites might throttle you to a certain amount of connections so you shouldn't make this number too high.
 - I have my default output file template as just the title. If you want something else, change `'%(title)s.%(ext)s'` to your liking. Refer to [the output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template) for more information.
