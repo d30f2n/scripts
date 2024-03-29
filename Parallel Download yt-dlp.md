@@ -4,6 +4,9 @@
 ThreadJob Module for PowerShell
 To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShell.
 
+## Usage
+- `yt-dlp-parallel path\to\listOfUrls.txt` will batch download URLs in parallel listed in a text document
+
 ## Instructions
 1. Create a PowerShell profile if you haven't before. You will place the script in your profile so you can run it at any time.
    ```
@@ -22,10 +25,16 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
 - Change the function name to whatever you want. This is what you will type in to run yt-dlp. I have mine as `yt-dlp-parallel`.
 - Change maxThreads to the amount of concurrent downloads you want. Some sites might throttle you to a certain amount of connections so you shouldn't make this number too high.
 - I have my default output file template as just the title. If you want something else, change `'%(title)s.%(ext)s'` to your liking. Refer to [the output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template) for more information.
-- When parallel downloading, it will show the yt-dlp output from all jobs in the current console window. This is why I disabled the progress bar while in parallel. If you do not want any logging messages showing, delete the line `Receive-Job -Id $idArray -Wait`. If you delete this line, you can run `Get-Job` to see which yt-dlp jobs have finished. Then `Receive-Job -Id <idnumber>` to get the yt-dlp messages from that job.
-
-## Usage
-- `yt-dl path\to\listOfUrls.txt` will batch download URLs in parallel listed in a text document
+- When parallel downloading, it will show the yt-dlp output from all jobs in the current console window. This is why I disabled the progress bar while in parallel. If you do not want any logging messages showing, you can remove this section:
+  ```
+      foreach($id in Get-Job)
+    {
+        $numIds++
+    }
+    $idArray = 1..$numIds
+    Receive-Job -Id $idArray -Wait
+  ```
+  If you delete this line, you can run `Get-Job` to see which yt-dlp jobs have finished. Then `Receive-Job -Id <idnumber>` to get the yt-dlp messages from that job.
 
 ## Script
 ```
