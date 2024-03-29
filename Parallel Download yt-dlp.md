@@ -34,7 +34,7 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
     $idArray = 1..$numIds
     Receive-Job -Id $idArray -Wait
   ```
-  If you delete this line, you can run `Get-Job` to see which yt-dlp jobs have finished. Then `Receive-Job -Id <idnumber>` to get the yt-dlp messages from that job.
+  If you remove this, the tasks will continue to run in the background without any streaming output. You can run `Get-Job` to see which yt-dlp jobs have finished. Then `Receive-Job -Id <idnumber>` to get the yt-dlp messages from that job.
 
 ## Script
 ```
@@ -54,3 +54,11 @@ function yt-dlp-parallel([string]$inputFile)
     Receive-Job -Id $idArray -Wait
 }
 ```
+
+## Resources
+- yt-dlp https://github.com/yt-dlp/yt-dlp
+- PowerShell Profiles https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles
+- ThreadJob https://learn.microsoft.com/en-us/powershell/module/threadjob/
+- Start-ThreadJob https://learn.microsoft.com/en-us/powershell/module/threadjob/start-threadjob
+- Get-Job https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/get-job
+- Receive-Job https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/receive-job
