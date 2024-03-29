@@ -19,7 +19,7 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
 
 ## Editing the script
 - This script will work as is. If you want to use my settings, you do not have to change anything.
-- Change the function name to whatever you want. This is what you will type in to run yt-dlp. I have mine as `yt-dl`.
+- Change the function name to whatever you want. This is what you will type in to run yt-dlp. I have mine as `yt-dlp-parallel`.
 - Change maxThreads to the amount of concurrent downloads you want. Some sites might throttle you to a certain amount of connections so you shouldn't make this number too high.
 - I have my default output file template as just the title. If you want something else, change `'%(title)s.%(ext)s'` to your liking. Refer to [the output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template) for more information.
 - When parallel downloading, it will show the yt-dlp output from all jobs in the current console window. This is why I disabled the progress bar while in parallel. If you do not want any logging messages showing, delete the line `Receive-Job -Id $idArray -Wait`. If you choose this option, you can run `Get-Job` to see which yt-dlp jobs have finished. Then `Receive-Job -Id <idnumber>` to get the yt-dlp messages from that job.
@@ -30,27 +30,19 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
 
 ## Script
 ```
-function yt-dl([string]$url)
+function yt-dlp-parallel([string]$inputFile)
 {
     $maxThreads = 3
-    if ($url -match '.txt')
+    Write-Output "Running yt-dlp in parallel using $maxThreads threads"
+    foreach($line in Get-Content $inputFile)
     {
-        echo "Running yt-dlp batch mode"
-        foreach($line in Get-Content $url)
-        {
-            Start-ThreadJob -ScriptBlock {yt-dlp -o '%(title)s.%(ext)s' --no-progress $Using:line} -ThrottleLimit $maxThreads
-        }
-        foreach($id in Get-Job)
-        {
-            $numIds++
-        }
-        $idArray = 1..$numIds
-        Receive-Job -Id $idArray -Wait
+        Start-ThreadJob -ScriptBlock {yt-dlp -o '%(title)s.%(ext)s' --no-progress $Using:line} -ThrottleLimit $maxThreads
     }
-    else
+    foreach($id in Get-Job)
     {
-        echo "Running yt-dlp single mode"
-        yt-dlp -o '%(title)s.%(ext)s' $url
+        $numIds++
     }
+    $idArray = 1..$numIds
+    Receive-Job -Id $idArray -Wait
 }
 ```
