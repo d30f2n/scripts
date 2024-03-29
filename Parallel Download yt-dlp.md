@@ -27,7 +27,7 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
 - I have my default output file template as just the title. If you want something else, change `'%(title)s.%(ext)s'` to your liking. Refer to [the output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template) for more information.
 - When parallel downloading, it will show the yt-dlp output from all jobs in the current console window. This is why I disabled the progress bar while in parallel. If you do not want any logging messages showing, you can remove this section:
   ```
-      foreach($id in Get-Job)
+    foreach($id in Get-Job)
     {
         $numIds++
     }
