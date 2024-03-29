@@ -1,8 +1,9 @@
 # How to Batch Download in Parallel with yt-dlp using PowerShell
 
 ## Prerequisites
-ThreadJob Module for PowerShell
-To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShell.
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) (obviously)
+- [ThreadJob Module for PowerShell](https://learn.microsoft.com/en-us/powershell/module/threadjob/)  
+  To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShell.
 
 ## Usage
 - `yt-dlp-parallel path\to\listOfUrls.txt` will batch download URLs in parallel listed in a text document
