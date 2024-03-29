@@ -25,8 +25,7 @@ To install, run `Install-Module -Scope CurrentUser -Name ThreadJob` in PowerShel
 - When parallel downloading, it will show the yt-dlp output from all jobs in the current console window. This is why I disabled the progress bar while in parallel. If you do not want any logging messages showing, delete the line `Receive-Job -Id $idArray -Wait`. If you choose this option, you can run `Get-Job` to see which yt-dlp jobs have finished. Then `Receive-Job -Id <idnumber>` to get the yt-dlp messages from that job.
 
 ## Usage
-- `yt-dl <url>` downloads a single URL like normal
-- `yt-dl path\to\listOfUrls.txt` will batch download URLs listed in a text document
+- `yt-dl path\to\listOfUrls.txt` will batch download URLs in parallel listed in a text document
 
 ## Script
 ```
